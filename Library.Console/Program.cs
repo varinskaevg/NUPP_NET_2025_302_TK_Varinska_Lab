@@ -1,49 +1,66 @@
-﻿using System;
+using Library.Console;
+using System;
 using System.Collections.Generic;
-using LibraryManagementSystem.Common;
-using Book = Library.Console.Book;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Library.ConsoleApp
+class Program
 {
-    internal class Program
+    static async Task Main()
     {
-        static void Main(string[] args)
+        var service = new CrudServiceAsync<Book>("books.json");
+
+        // Створення книг з обмеженням потоків за допомогою Semaphore
+        Console.WriteLine("Creating books with semaphore...");
+        var tasks = new List<Task>();
+        for (int i = 0; i < 10; i++)
         {
-            ICrudService<Book> bookService = new CrudService<Book>();
-
-            var book1 = new Book("1984", "George Orwell", 1949);
-            var book2 = new Book("Brave New World", "Aldous Huxley", 1932);
-
-            bookService.Create(book1);
-            bookService.Create(book2);
-
-            System.Console.WriteLine("=== Книги після додавання ===");
-            foreach (var book in bookService.ReadAll())
-                System.Console.WriteLine(book);
-
-            var updatedBook = new Book("1984", "George Orwell (Updated)", 1949);
-            bookService.Update(updatedBook);
-
-            System.Console.WriteLine("\n=== Книги після оновлення ===");
-            foreach (var book in bookService.ReadAll())
-                System.Console.WriteLine(book);
-
-            bookService.Remove(book2);
-
-            System.Console.WriteLine("\n=== Книги після видалення ===");
-            foreach (var book in bookService.ReadAll())
-                System.Console.WriteLine(book);
-
-            bookService.Save("books.json");
-
-            bookService = new CrudService<Book>();
-            bookService.Load("books.json");
-
-            System.Console.WriteLine("\n=== Книги після завантаження з файлу ===");
-            foreach (var book in bookService.ReadAll())
-                System.Console.WriteLine(book);
-
-            System.Console.ReadKey();
+            tasks.Add(SynchronizationExamples.RunSemaphoreExampleAsync());
         }
+        await Task.WhenAll(tasks);
+
+        // Додавання книг у сховище
+        Console.WriteLine("Creating books in service...");
+        for (int i = 0; i < 5; i++)
+        {
+            var book = Book.CreateRandom();
+            await service.CreateAsync(book);
+        }
+
+        // Демонстрація lock
+        Console.WriteLine("Running lock example...");
+        SynchronizationExamples.RunLockExample();
+
+        // AutoResetEvent
+        Console.WriteLine("Running AutoResetEvent example...");
+        SynchronizationExamples.RunAutoResetEventExample();
+        await Task.Delay(1500); // Чекаємо, поки потік відпрацює
+
+        // ManualResetEvent
+        Console.WriteLine("Running ManualResetEvent example...");
+        SynchronizationExamples.RunManualResetEventExample();
+        await Task.Delay(1500); // Чекаємо, поки потік відпрацює
+
+        // Статистика книг
+        var allBooks = (await service.ReadAllAsync()).ToList();
+        if (allBooks.Count > 0)
+        {
+            int min = allBooks.Min(b => b.Pages);
+            int max = allBooks.Max(b => b.Pages);
+            double avg = allBooks.Average(b => b.Pages);
+
+            Console.WriteLine($"Books count: {allBooks.Count}");
+            Console.WriteLine($"Min pages: {min}");
+            Console.WriteLine($"Max pages: {max}");
+            Console.WriteLine($"Avg pages: {avg:F2}");
+        }
+        else
+        {
+            Console.WriteLine("No books found.");
+        }
+
+        // Збереження у файл
+        await service.SaveAsync();
+        Console.WriteLine("Data saved to file.");
     }
 }

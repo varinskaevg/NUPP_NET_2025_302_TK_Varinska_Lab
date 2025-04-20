@@ -398,3 +398,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Власні великі файли, які слід виключити
+books.json
+*.bak
+*.zip
+*.csv
+*.7z
+*.db
+*.sqlite

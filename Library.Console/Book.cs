@@ -6,33 +6,32 @@ using System.Threading.Tasks;
 
 namespace Library.Console
 {
-    public class Book
+    public class Book : IEntity
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
+        public int Pages { get; set; }
 
-        public override bool Equals(object obj)
+        public Book(string title, string author, int pages)
         {
-            if (obj is Book other)
-            {
-                return Title == other.Title && Author == other.Author;
-            }
-            return false;
-        }
-        public Book(string title, string author, int year)
-        {
+            Id = Guid.NewGuid();
             Title = title;
             Author = author;
+            Pages = pages;
         }
 
-        public override int GetHashCode()
+        public static Book CreateRandom()
         {
-            return Title.GetHashCode() ^ Author.GetHashCode();
-        }
+            var titles = new[] { "1984", "Brave New World", "CLR via C#", "The Pragmatic Programmer", "Clean Code" };
+            var authors = new[] { "George Orwell", "Aldous Huxley", "Jeffrey Richter", "Andy Hunt", "Robert C. Martin" };
+            var rand = new Random(Guid.NewGuid().GetHashCode());
 
-        public override string ToString()
-        {
-            return $"Title: {Title}, Author: {Author}";
+            string title = titles[rand.Next(titles.Length)];
+            string author = authors[rand.Next(authors.Length)];
+            int pages = rand.Next(100, 1000); // Випадкова кількість сторінок
+
+            return new Book(title, author, pages);
         }
     }
 }
