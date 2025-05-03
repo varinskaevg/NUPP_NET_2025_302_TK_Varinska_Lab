@@ -1,0 +1,14 @@
+E:\project\Library.Infrastructure\bin\Debug\net9.0\Library.Infrastructure.deps.json
+E:\project\Library.Infrastructure\bin\Debug\net9.0\Library.Infrastructure.runtimeconfig.json
+E:\project\Library.Infrastructure\bin\Debug\net9.0\Library.Infrastructure.dll
+E:\project\Library.Infrastructure\bin\Debug\net9.0\Library.Infrastructure.pdb
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.csproj.AssemblyReference.cache
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.AssemblyInfoInputs.cache
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.AssemblyInfo.cs
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.csproj.CoreCompileInputs.cache
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.dll
+E:\project\Library.Infrastructure\obj\Debug\net9.0\refint\Library.Infrastructure.dll
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.pdb
+E:\project\Library.Infrastructure\obj\Debug\net9.0\Library.Infrastructure.genruntimeconfig.cache
+E:\project\Library.Infrastructure\obj\Debug\net9.0\ref\Library.Infrastructure.dll
